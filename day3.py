@@ -30,8 +30,8 @@ def phase2(v):
 
 
 def find_gas(gas, func):
-    for i in range(len(gas[0])):
-        column = [row[i] for row in gas]
+    for col in range(len(gas[0])):
+        column = [row[col] for row in gas]
         one_count = len([item for item in column if item == '1'])
         if func(one_count, len(gas)):
             gas = [gas[n] for n in range(len(gas)) if column[n] == '1']
