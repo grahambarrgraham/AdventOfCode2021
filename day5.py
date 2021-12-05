@@ -1,7 +1,6 @@
 from pathlib import Path
 import sys
 import re
-import itertools
 
 TEST_MODE = bool(len(sys.argv) > 1 and sys.argv[1] == "test")
 
@@ -20,10 +19,10 @@ def is_not_diagonal(points):
 
 def calc(v):
     intersect_dict = {}
-    for pair in itertools.combinations(v, 2):
-        for intersect in pair[0].intersection(pair[1]):
-            intersect_dict[intersect] = intersect_dict.get(intersect, 0) + 1
-    return len(intersect_dict)
+    for line in v:
+        for point in line:
+            intersect_dict[point] = intersect_dict.get(point, 0) + 1
+    return len([k for (k, v) in intersect_dict.items() if v > 1])
 
 
 def interpolate(point_a, point_b):
