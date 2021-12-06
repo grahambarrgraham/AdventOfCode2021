@@ -31,18 +31,9 @@ def calc(v, days):
     return sum([v for v in fish_dict.values()])
 
 
-def age(fish, number):
-    return [6, 8] * number if fish == 0 else [fish - 1] * number
-
-
-def flatten(t):
-    return [item for sublist in t for item in sublist]
-
-
 if __name__ == "__main__":
     with Path(__file__).parent.joinpath("input/day6_sample" if TEST_MODE else "input/day6").open() as f:
         values = [[int(j) for j in i.split(",")] for i in f][0]
-        print("values", values)
         print(f'Phase 1: {phase1(values)}')
         print(f'Phase 2: {phase2(values)}')
 
