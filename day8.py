@@ -53,9 +53,9 @@ def intersect_count(a, b):
 
 
 if __name__ == "__main__":
+
     def parse(v):
         return v[0].strip().split(" "), v[1].strip().split(" ")
-
 
     with Path(__file__).parent.joinpath("input/day8_sample" if TEST_MODE else "input/day8").open() as f:
         values = [parse(i.split('|')) for i in f]
