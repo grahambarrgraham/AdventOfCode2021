@@ -19,7 +19,7 @@ def phase2(v):
     seen_list = set()
     basins = [basin((x, y), v, seen_list) for y in range(len(v)) for x in range(len(v[0]))]
     basins = sorted(basins, reverse=True, key=len)[0:3]
-    return math.prod([len(b) for b in basins if len(b) > 0])
+    return math.prod([len(b) for b in basins])
 
 
 def neighbours(coord, v):
