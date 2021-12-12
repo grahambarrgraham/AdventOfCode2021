@@ -1,7 +1,6 @@
 from pathlib import Path
 import sys
 from collections import defaultdict
-import copy
 
 TEST_MODE = bool(len(sys.argv) > 1 and sys.argv[1] == "test")
 
