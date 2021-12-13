@@ -1,6 +1,8 @@
 from pathlib import Path
 import sys
 import copy
+# import curses
+# import time
 
 TEST_MODE = bool(len(sys.argv) > 1 and sys.argv[1] == "test")
 
@@ -38,34 +40,25 @@ def generation_step(v, gen):
     return flashed
 
 
-def print_grid(v, neighbours, flashes, flashed, gen):
-
-    print()
-    print("Generation", gen)
-
-    def format(coord, val):
-        if coord in flashes:
-            return red(val)
-        elif coord in neighbours:
-            return green(val)
-        elif coord in flashed:
-            return yellow(val)
-        else:
-            return val
-
-    def red(val):
-        return '\033[91m' + val + '\033[0m'
-
-    def green(val):
-        return '\033[92m' + val + '\033[0m'
-
-    def yellow(val):
-        return '\033[93m' + val + '\033[0m'
-
-    for y, line in enumerate(v):
-        zz = enumerate(v[y])
-        y_ = [format((x, y), str(val)) for x, val in zz]
-        print(''.join(y_))
+# def print_grid(v, neighbours, flashes, flashed, gen):
+#     def grid():
+#         stdscr.addstr(0, 0, "\nGeneration" + str(gen) + "\n")
+#         def format(coord, val):
+#             if coord in flashes:
+#                 stdscr.addstr(str(val), curses.color_pair(1))
+#             elif coord in neighbours:
+#                 stdscr.addstr(str(val), curses.color_pair(2))
+#             elif coord in flashed:
+#                 stdscr.addstr(str(val), curses.color_pair(3))
+#             else:
+#                 stdscr.addstr(str(val))
+#         for y, line in enumerate(v):
+#             for x, val in enumerate(v[y]):
+#                 format((x, y), val)
+#             stdscr.addstr("\n")
+#     grid()
+#     stdscr.refresh()
+#     time.sleep(0.05)
 
 
 def flatten(t):
@@ -94,7 +87,23 @@ def generate(coords, v):
 
 
 if __name__ == "__main__":
+    # global stdscr
+    # stdscr = curses.initscr()
+    # curses.start_color()
+    # curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
+    # curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
+    # curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+    # curses.noecho()
+    # curses.cbreak()
+
     with Path(__file__).parent.joinpath("input/day11_sample" if TEST_MODE else "input/day11").open() as f:
         values = [[int(j) for j in i.strip()] for i in f]
-        print(f'Phase 1: {phase1(copy.deepcopy(values))}')
-        print(f'Phase 2: {phase2(copy.deepcopy(values))}')
+        phase1 = phase1(copy.deepcopy(values))
+        phase2 = phase2(copy.deepcopy(values))
+
+        # curses.echo()
+        # curses.nocbreak()
+        # curses.endwin()
+
+        print(f'Phase 1: {phase1}')
+        print(f'Phase 2: {phase2}')

@@ -40,7 +40,7 @@ def search(cave_dict, visited_func):
     return len(all_paths)
 
 
-def as_dict(v):
+def load(v):
     res = defaultdict(list)
     for i, j in v:
         res[i].append(j)
@@ -50,6 +50,6 @@ def as_dict(v):
 
 if __name__ == "__main__":
     with Path(__file__).parent.joinpath("input/day12_sample" if TEST_MODE else "input/day12").open() as f:
-        values = as_dict(([tuple(i.strip().split('-')) for i in f]))
-        print(f'Phase 1: {phase1(values)}')
-        print(f'Phase 2: {phase2(values)}')
+        cave_dict = load(([i.strip().split('-') for i in f]))
+        print(f'Phase 1: {phase1(cave_dict)}')
+        print(f'Phase 2: {phase2(cave_dict)}')
