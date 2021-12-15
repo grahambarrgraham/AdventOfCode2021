@@ -37,8 +37,7 @@ def calc(stop, v):
 
 
 def generate(key, value, pairs_dict):
-    count = pairs_dict[key]
-    return key, key[0] + value, value + key[1], value, count
+    return key, key[0] + value, value + key[1], value, (pairs_dict[key])
 
 
 def find_element_pairs(polymer):
