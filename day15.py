@@ -47,10 +47,18 @@ def all_nodes(v):
     return ret
 
 
+neighbours_dict = {}
+
+
 def find_neighbours(coord, v):
-    x, y = coord
-    return [(x + a, y + b) for a, b in [(-1, 0), (0, -1), (1, 0), (0, 1)] if
-            len(v[0]) > x + a >= 0 and len(v) > y + b >= 0]
+    if coord not in neighbours_dict:
+        x, y = coord
+        neighbours = [(x + a, y + b) for a, b in [(-1, 0), (0, -1), (1, 0), (0, 1)] if
+                len(v[0]) > x + a >= 0 and len(v) > y + b >= 0]
+
+        neighbours_dict[coord] = neighbours
+
+    return neighbours_dict[coord]
 
 
 def cost(coord, v):
@@ -58,21 +66,17 @@ def cost(coord, v):
     return v[y][x]
 
 
-def distance(coord, target):
-    return abs(target[0] - coord[0]) + abs(target[1] - coord[1])
-
-
 def a_star_algorithm(graph, start, stop):
-    open_lst = {start}
-    closed_lst = set()
-    poo = {start: 0}
-    par = {start: start}
+    open_set = {start}
+    closed_set = set()
+    node_scores = {start: 0}
+    parents = {start: start}
 
-    while len(open_lst) > 0:
+    while len(open_set) > 0:
         n = None
 
-        for v in open_lst:
-            if n is None or poo[v] < poo[n]:
+        for v in open_set:
+            if n is None or node_scores[v] < node_scores[n]:
                 n = v
 
         if n is None:
@@ -80,26 +84,26 @@ def a_star_algorithm(graph, start, stop):
             return None
 
         if n == stop:
-            return poo[n]
+            return node_scores[n]
 
         for m in find_neighbours(n, graph):
             weight = cost(m, graph)
-            if m not in open_lst and m not in closed_lst:
-                open_lst.add(m)
-                par[m] = n
-                poo[m] = poo[n] + weight
+            if m not in open_set and m not in closed_set:
+                open_set.add(m)
+                parents[m] = n
+                node_scores[m] = node_scores[n] + weight
 
             else:
-                if poo[m] > poo[n] + weight:
-                    poo[m] = poo[n] + weight
-                    par[m] = n
+                if node_scores[m] > node_scores[n] + weight:
+                    node_scores[m] = node_scores[n] + weight
+                    parents[m] = n
 
-                    if m in closed_lst:
-                        closed_lst.remove(m)
-                        open_lst.add(m)
+                    if m in closed_set:
+                        closed_set.remove(m)
+                        open_set.add(m)
 
-        open_lst.remove(n)
-        closed_lst.add(n)
+        open_set.remove(n)
+        closed_set.add(n)
 
     return None
 
@@ -108,6 +112,7 @@ if __name__ == "__main__":
     with Path(__file__).parent.joinpath("input/day15_sample" if TEST_MODE else "input/day15").open() as f:
         values = [[int(j) for j in list(i.strip())] for i in f]
         print(f'Phase 1: {phase1(values)}')
+        neighbours_dict = {}
         print(f'Phase 2: {phase2(values)}')
 
 
