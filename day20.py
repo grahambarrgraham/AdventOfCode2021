@@ -10,13 +10,13 @@ def to_number(s):
 
 
 def phase1(v):
-    enhancement_dict, image = v
-    return calc(enhancement_dict, image, 2, flashes=enhancement_dict[0] == '#')
+    algorithm, image = v
+    return calc(algorithm, image, 2, flashes=algorithm[0] == '#' and algorithm[-1] == '.')
 
 
 def phase2(v):
-    enhancement_dict, image = v
-    return calc(enhancement_dict, image, 50, flashes=enhancement_dict[0] == '#')
+    algorithm, image = v
+    return calc(algorithm, image, 50, flashes=algorithm[0] == '#' and algorithm[-1] == '.')
 
 
 def calc(enhancement_dict, image, count, flashes):
@@ -70,9 +70,9 @@ def find_neighbours(coord, v, surrounding_char):
 
 
 def load(param):
-    map = param[0]
+    algorithm = param[0]
     image = [list(line) for line in param[2:]]
-    return map, image
+    return algorithm, image
 
 
 if __name__ == "__main__":
